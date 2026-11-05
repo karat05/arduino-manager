@@ -774,8 +774,8 @@ func (m *Manager) loadIndex() (*LibraryIndex, error) {
 		if g == nil {
 			copyItem := item
 			copyItem.Versions = nil
-			groups[item.Name] = ©Item
-			g = ©Item
+			groups[item.Name] = &copyItem
+			g = &copyItem
 		}
 		g.Versions = append(g.Versions, IndexVersion{Version: item.Version, URL: item.URL})
 	}
@@ -801,7 +801,7 @@ func (m *Manager) searchIndex(query string) ([]SearchItem, error) {
 		lib := idx.Libraries[i]
 		if strings.Contains(strings.ToLower(lib.Name), q) {
 			copyItem := lib
-			result = append(result, SearchItem{Library: ©Item, Kind: "Local library"})
+			result = append(result, SearchItem{Library: &copyItem, Kind: "Local library"})
 		}
 	}
 	return result, nil
